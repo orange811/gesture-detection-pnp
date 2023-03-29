@@ -77,6 +77,5 @@ with mp_hand.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as
 
 # Release the video capture, exit the LED controller, and close all windows
 video.release()
-cnt.led(-1)
-cnt.board.exit()
+cnt.endProgram()
 cv2.destroyAllWindows()
