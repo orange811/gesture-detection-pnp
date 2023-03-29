@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
-import PJcontroller as cnt
+import controller as cnt
 
 # Initialize the video capture
 video = cv2.VideoCapture(0)
