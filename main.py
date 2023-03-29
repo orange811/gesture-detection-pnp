@@ -48,15 +48,15 @@ with mp_hand.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as
             
         # Count the fingers based on the landmark positions
         fingers = []
-        if len(lmList) != 0:
+        if len(lmList):
             for offset in range(0,len(lmList),21):
-                rightHand = (lmList[tipIds[0]][1]+offset>lmList[tipIds[4]][1]+offset)
-                if not((lmList[tipIds[0]][1]+offset > lmList[tipIds[0] - 1][1]+offset) ^ (rightHand)):
+                rightHand = (lmList[tipIds[0]+offset][1]>lmList[tipIds[4]+offset][1])
+                if not((lmList[tipIds[0]+offset][1] > lmList[tipIds[0] - 1+offset][1]) ^ (rightHand)):
                         fingers.append(1)
                 else:
                     fingers.append(0)
                 for id in range(1, 5):
-                    if lmList[tipIds[id]][2]+offset < lmList[tipIds[id] - 2][2]+offset:
+                    if lmList[tipIds[id]+offset][2] < lmList[tipIds[id] - 2+offset][2]:
                         fingers.append(1)
                     else:
                         fingers.append(0)

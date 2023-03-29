@@ -39,7 +39,7 @@ for i in range(7, 14):
     pins.append(pin)
 
 def led(raised):
-    raisedBounded = raised%9
+    raisedBounded = min(9,raised)
     if (raised==-1):
         for i in range(7):
             pins[i].write(0)
