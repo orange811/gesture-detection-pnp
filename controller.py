@@ -1,50 +1,48 @@
 import pyfirmata
 
-comport='COM6'
+comport = 'COM5'
 
-board=pyfirmata.Arduino(comport)
+board = pyfirmata.Arduino(comport)
 
-led_1=board.get_pin('d:13:o')
-led_2=board.get_pin('d:12:o')
-led_3=board.get_pin('d:11:o')
-led_4=board.get_pin('d:10:o')
-led_5=board.get_pin('d:9:o')
+anodeSegments = [
+    [0, 0, 0, 0, 0, 0, 1],  # 0
+    [1, 0, 0, 1, 1, 1, 1],  # 1
+    [0, 0, 1, 0, 0, 1, 0],  # 2
+    [0, 0, 0, 0, 1, 1, 0],  # 3
+    [1, 0, 0, 1, 1, 0, 0],  # 4
+    [0, 1, 0, 0, 1, 0, 0],  # 5
+    [0, 1, 0, 0, 0, 0, 0],  # 6
+    [0, 0, 0, 1, 1, 1, 1],  # 7
+    [0, 0, 0, 0, 0, 0, 0],  # 8
+    [0, 0, 0, 0, 1, 0, 0],  # 9
+]
 
-def led(total):
-    if total==0:
-        led_1.write(0)
-        led_2.write(0)
-        led_3.write(0)
-        led_4.write(0)
-        led_5.write(0)
-    elif total==1:
-        led_1.write(1)
-        led_2.write(0)
-        led_3.write(0)
-        led_4.write(0)
-        led_5.write(0)
-    elif total==2:
-        led_1.write(1)
-        led_2.write(1)
-        led_3.write(0)
-        led_4.write(0)
-        led_5.write(0)
-    elif total==3:
-        led_1.write(1)
-        led_2.write(1)
-        led_3.write(1)
-        led_4.write(0)
-        led_5.write(0)
-    elif total==4:
-        led_1.write(1)
-        led_2.write(1)
-        led_3.write(1)
-        led_4.write(1)
-        led_5.write(0)
-    elif total==5:
-        led_1.write(1)
-        led_2.write(1)
-        led_3.write(1)
-        led_4.write(1)
-        led_5.write(1)
+cathodeSegments = [
+    [1, 1, 1, 1, 1, 1, 0],  # 0
+    [0, 1, 1, 0, 0, 0, 0],  # 1
+    [1, 1, 0, 1, 1, 0, 1],  # 2
+    [1, 1, 1, 1, 0, 0, 1],  # 3
+    [0, 1, 1, 0, 0, 1, 1],  # 4
+    [1, 0, 1, 1, 0, 1, 1],  # 5
+    [1, 0, 1, 1, 1, 1, 1],  # 6
+    [1, 1, 1, 0, 0, 0, 0],  # 7
+    [1, 1, 1, 1, 1, 1, 1],  # 8
+    [1, 1, 1, 1, 0, 1, 1]   # 9
+]
 
+
+pins = []
+
+for i in range(7, 14):
+    pin = board.get_pin('d:{}:o'.format(i))
+    pin.mode = pyfirmata.OUTPUT
+    pins.append(pin)
+
+def led(raised):
+    raisedBounded = raised%9
+    if (raised==-1):
+        for i in range(7):
+            pins[i].write(0)
+    else:        
+        for i in range(7):
+            pins[i].write(cathodeSegments[raisedBounded][i])
