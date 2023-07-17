@@ -3,26 +3,13 @@ import pyfirmata
 #To run without arduino connected
 connected = True
 try:
-    comport = 'COM5'
+    comport = 'COM4'
     board = pyfirmata.Arduino(comport)
 except:
     connected = False
     print("BOARD NOT CONNECTED!!\nCheck connection and try changing port number\nRunning without Arduino connected")
 
 if connected:
-    anodeSegments = [
-        [0, 0, 0, 0, 0, 0, 1],  # 0
-        [1, 0, 0, 1, 1, 1, 1],  # 1
-        [0, 0, 1, 0, 0, 1, 0],  # 2
-        [0, 0, 0, 0, 1, 1, 0],  # 3
-        [1, 0, 0, 1, 1, 0, 0],  # 4
-        [0, 1, 0, 0, 1, 0, 0],  # 5
-        [0, 1, 0, 0, 0, 0, 0],  # 6
-        [0, 0, 0, 1, 1, 1, 1],  # 7
-        [0, 0, 0, 0, 0, 0, 0],  # 8
-        [0, 0, 0, 0, 1, 0, 0],  # 9
-    ]
-
     cathodeSegments = [
         [1, 1, 1, 1, 1, 1, 0],  # 0
         [0, 1, 1, 0, 0, 0, 0],  # 1
@@ -58,3 +45,4 @@ def endProgram():
     led(-1)
     if connected:
         board.exit()
+        

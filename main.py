@@ -43,13 +43,21 @@ with mp_hand.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as
                 for id, lm in enumerate(myHand.landmark):
                     h, w, c = image.shape
                     cx, cy = int(lm.x * w), int(lm.y * h)
-                    lmList.append([id, cx, cy])
+                    lmList.append([id, cx, cy])#,lm.z])
                 mp_draw.draw_landmarks(image, myHand, mp_hand.HAND_CONNECTIONS)
             
         # Count the fingers based on the landmark positions
         fingers = []
         if len(lmList):
             for offset in range(0,len(lmList),21):
+                xPositions = [lmList[p][1] for p in range(offset, offset + 21)]
+                yPositions = [lmList[p][2] for p in range(offset, offset + 21)]
+                #print(lmList[tipIds[0]+offset][3]-lmList[tipIds[4]+offset][3])
+                x0=min(xPositions)
+                x1 = max(xPositions)
+                #zDiff = lmList[xPositions.index(x0)][3]-lmList[xPositions.index(x1)][3]
+                y0=min(yPositions)
+                y1 = max(yPositions)
                 rightHand = (lmList[tipIds[0]+offset][1]>lmList[tipIds[4]+offset][1])
                 if not((lmList[tipIds[0]+offset][1] > lmList[tipIds[0] - 1+offset][1]) ^ (rightHand)):
                         fingers.append(1)
@@ -60,6 +68,7 @@ with mp_hand.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as
                         fingers.append(1)
                     else:
                         fingers.append(0)
+                cv2.rectangle(image, (x0, y0), (x1, y1), (255, 0,0), 1)
             total = fingers.count(1)
             cnt.led(total)
             
