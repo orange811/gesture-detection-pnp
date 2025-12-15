@@ -1,6 +1,6 @@
 # gesture-detection-pnp
 
-This project is created by Piyush Jain, Neha Pattanshetti and Piyush More in our second year of college for our Bachelor's degree in Electronics and Telecommunications
+This project is created by Piyush Jain, Neha Pattanshetti and Piyush More in our second year of college for our Bachelor's degree in Electronics and Telecommunications.
 
 Human communication has been a complex and ever-evolving phenomenon. While spoken language is the most common form of communication, other languages have been established for specific purposes.
 Sign language, in particular, is used by individuals with hearing or speech impairments to communicate, through hand gestures. 
